@@ -4,4 +4,5 @@ type Endpoint struct {
 	Method  string
 	Path    string
 	Handler Handler
+	Type    string
 }

@@ -41,34 +41,15 @@ func (s *Service) SetupHandlers(endpoints []Endpoint) {
 
 	for _, e := range endpoints {
 		handler = e.Handler
+		e.Handler.Init()
 		process = []gin.HandlerFunc{}
 		process = append(process, handler.CoreBeforeMiddleware()...)
-		process = append(process, handler.BeforeMiddleware()...)
 		process = append(process, handler.Handle)
-		process = append(process, handler.AfterMiddleware()...)
 		process = append(process, handler.CoreAfterMiddleware()...)
-		path = fmt.Sprintf("/%s/%s/api/%s", s.config.Prefix, s.config.Version, e.Path)
-		s.core.Handle(e.Method, path, process...)
-	}
-}
-
-func (s *Service) SetupDocs(endpoints []Endpoint) {
-
-	var (
-		path    string
-		handler Handler
-		process []gin.HandlerFunc
-	)
-
-	for _, e := range endpoints {
-		handler = e.Handler
-		process = []gin.HandlerFunc{}
-		process = append(process, handler.CoreBeforeMiddleware()...)
-		process = append(process, handler.BeforeMiddleware()...)
-		process = append(process, handler.Handle)
-		process = append(process, handler.AfterMiddleware()...)
-		process = append(process, handler.CoreAfterMiddleware()...)
-		path = e.Path
+		if e.Type == "" {
+			e.Type = "api"
+		}
+		path = fmt.Sprintf("/%s/%s/%s/%s", s.config.Prefix, s.config.Version, e.Type, e.Path)
 		s.core.Handle(e.Method, path, process...)
 	}
 }
