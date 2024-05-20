@@ -43,9 +43,9 @@ func (s *Service) SetupHandlers(endpoints []Endpoint) {
 		handler = e.Handler
 		e.Handler.Init()
 		process = []gin.HandlerFunc{}
-		process = append(process, handler.CoreBeforeMiddleware()...)
+		process = append(process, handler.BeforeMiddleware()...)
 		process = append(process, handler.Handle)
-		process = append(process, handler.CoreAfterMiddleware()...)
+		process = append(process, handler.AfterMiddleware()...)
 		if e.Type == "" {
 			e.Type = "api"
 		}

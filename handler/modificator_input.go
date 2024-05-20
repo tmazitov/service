@@ -7,7 +7,7 @@ import (
 )
 
 type InputModificator[I any] struct {
-	Input I
+	Input *I
 }
 
 func (i *InputModificator[I]) Setup() gin.HandlerFunc {

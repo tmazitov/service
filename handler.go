@@ -7,6 +7,6 @@ import (
 type Handler interface {
 	Handle(ctx *gin.Context)
 	Init()
-	CoreAfterMiddleware() []gin.HandlerFunc
-	CoreBeforeMiddleware() []gin.HandlerFunc
+	AfterMiddleware() []gin.HandlerFunc
+	BeforeMiddleware() []gin.HandlerFunc
 }

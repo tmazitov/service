@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/gin-gonic/gin"
 	"github.com/tmazitov/service"
 	"github.com/tmazitov/service/handler"
@@ -13,12 +11,11 @@ type PingMessage struct {
 }
 
 type PingHandler struct {
-	handler.CoreBehavior[PingMessage, PingMessage, PingMessage]
+	handler.CoreBehavior[PingMessage, PingMessage]
 }
 
 func (h *PingHandler) Handle(ctx *gin.Context) {
-	fmt.Println("Handling request", h.Input.Message)
-	h.Output.Message = h.Input.Message + h.Query.Message
+	h.Output.Message = h.Input.Message
 }
 
 func main() {

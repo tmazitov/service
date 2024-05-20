@@ -3,7 +3,7 @@ package handler
 import "github.com/gin-gonic/gin"
 
 type OutputModificator[O any] struct {
-	Output O
+	Output *O
 }
 
 func (o *OutputModificator[O]) Setup() gin.HandlerFunc {
