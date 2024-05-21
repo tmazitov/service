@@ -12,6 +12,9 @@ func (b *DefaultBehavior) Init() {
 	b.Mods = []Modificator{}
 }
 
+func (b *DefaultBehavior) Handle(ctx *gin.Context) {
+}
+
 func (b *DefaultBehavior) BeforeMiddleware() []gin.HandlerFunc {
 	var result []gin.HandlerFunc = []gin.HandlerFunc{}
 
