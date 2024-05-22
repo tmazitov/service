@@ -4,13 +4,15 @@ import (
 	"fmt"
 
 	"github.com/gin-gonic/gin"
+	"github.com/tmazitov/service/middleware"
 )
 
 type ServiceConfig struct {
-	Name    string `json:"name"`
-	Port    int    `json:"port"`
-	Prefix  string `json:"prefix"`
-	Version string `json:"version"`
+	Name                string `json:"name"`
+	Port                int    `json:"port"`
+	Prefix              string `json:"prefix"`
+	Version             string `json:"version"`
+	MaxRequestDataBytes int64  `json:"maxRequestDataBytes"`
 }
 
 type Service struct {
@@ -19,6 +21,11 @@ type Service struct {
 }
 
 func NewService(config *ServiceConfig) *Service {
+
+	if config.MaxRequestDataBytes == 0 {
+		config.MaxRequestDataBytes = 64
+	}
+
 	return &Service{
 		config: config,
 		core:   gin.Default(),
@@ -58,6 +65,11 @@ func (s *Service) GetCore() *gin.Engine {
 	return s.core
 }
 
+func (s *Service) setupDefaultMiddleware() {
+	s.core.Use(middleware.ContentLimiter(s.config.MaxRequestDataBytes * 1024 * 1024))
+}
+
 func (s *Service) Start() {
+	s.setupDefaultMiddleware()
 	s.core.Run(fmt.Sprintf(":%d", s.config.Port))
 }
