@@ -9,4 +9,5 @@ type Handler interface {
 	Init()
 	AfterMiddleware() []gin.HandlerFunc
 	BeforeMiddleware() []gin.HandlerFunc
+	// Destroy()
 }
