@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/gin-gonic/gin"
 	"github.com/tmazitov/service"
 	"github.com/tmazitov/service/handler"
@@ -15,6 +17,7 @@ type PingHandler struct {
 }
 
 func (h *PingHandler) Handle(ctx *gin.Context) {
+	fmt.Printf("value : %v\n", h.Input.Message)
 	h.Output.Message = h.Input.Message
 }
 
